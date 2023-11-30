@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Paintball</title>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+        <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
+        <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>      
+        <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>  
+        
+        <script src="./js/playerMovements.js"></script>
+        <script src="./js/shoot.js"></script>
+        <script src="./js/gameObject.js"></script>
+    </head>
+    <body>
+        <a-scene id = "scene" inspector-plugin-recast>
+            <a-assets>
+                <a-asset-item id="shooter" src = "./assets/weapon/scene.gltf"></a-asset-item>
+                <a-asset-item id = "collider" src = "./assets/navmesh (1).gltf"></a-asset-item>
+            </a-assets>
+            <a-entity id="environment" environment="preset : checkerboard; skyType : gradient; lightning : point;"></a-entity>
+
+            <a-entity light="type: ambient; color: white; intensity:0.5"></a-entity>
+            <a-entity light="type: directional; color: #EEE; intensity: 1" position="-1 1 0"></a-entity>
+
+            <a-entity id="camera" camera position = "0 1.6 0" wasd-controls look-controls="pointerLockEnabled:false"></a-entity>
+
+            <a-entity id="camera-rig" movement-controls="speed: 3; constrainToNavMesh: true" position="0 1 2">
+                <a-entity id="weapon" gltf-model="#shooter" position="0 1.49 -0.01" rotation="20 0 0" scale="0.2 0.2 0.2"
+                 player-movement>
+                </a-entity>
+            </a-entity>
+            <a-cursor></a-cursor>
+
+            <a-entity bullets></a-entity>
+            <a-entity wire-fence></a-entity>
+
+            <a-plane id="ground" repeat="5 5" position="0 1 0" rotation="-90 0 0" height="200" width="200" color="#FBF2D4"
+            static-body visible="false">
+            </a-plane>
+
+            <a-entity id = "navigation-mesh" gltf-model = "#collider" visible="false" nav-mesh></a-entity>
+
+        </a-scene>
+    </body>
+</html>
